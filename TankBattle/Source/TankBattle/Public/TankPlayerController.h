@@ -19,7 +19,24 @@ class TANKBATTLE_API ATankPlayerController : public APlayerController
 	
 public:
 
+	ATankPlayerController();
+
+	virtual void Tick(float DeltaTime) override;
+
 	ATank* GetControlledTank() const;
-	
-	
+
+	void AimTowardCrosshair();
+
+	bool GetSightRayHitLocation(FVector &HitLocation) const;
+
+	bool GetLookDirection(FVector2D ScreenLocation,FVector &LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
+
+private:
+	UPROPERTY(EditAnywhere,Category = "ATankPlayerController")
+		float CrossHairXLocation = 0.5;
+	UPROPERTY(EditAnywhere, Category = "ATankPlayerController")
+		float CrossHairYLocation = 0.3;
+	UPROPERTY(EditAnywhere, Category = "ATankPlayerController")
+		float LineTraceRange = 100000.f;
 };
