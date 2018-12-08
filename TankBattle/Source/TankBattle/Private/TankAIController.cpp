@@ -16,7 +16,8 @@ void ATankAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (GetPlayerTank())
 	{
-		
+		FVector HitLocation = GetPlayerTank()->GetActorLocation();
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
