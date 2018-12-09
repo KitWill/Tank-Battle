@@ -8,7 +8,7 @@
 
 class UTankAimingComponent;
 class UTankTurret;
-
+class AProjectile;
 
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
@@ -18,8 +18,6 @@ class TANKBATTLE_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
-
-	
 
 protected:
 	// Called when the game starts or when spawned
@@ -43,5 +41,14 @@ public:
 		void SetBarrelReference(UTankBarrel *BarrelToSet);
 	UFUNCTION(BlueprintCallable, Category = "Tank")
 		void SetTureteReference(UTankTurret *TurretToSet);
-	
+	UFUNCTION(BlueprintCallable, Category = "Tank")
+		void Fire();
+	UPROPERTY(EditAnywhere, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float ReloadTimeInSeconds = 3;
+
+	UTankBarrel *Barrel = nullptr;
+
+	double LastFireTime = 0;
 };

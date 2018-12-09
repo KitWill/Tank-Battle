@@ -18,6 +18,8 @@ void ATankAIController::Tick(float DeltaTime)
 	{
 		FVector HitLocation = GetPlayerTank()->GetActorLocation();
 		GetControlledTank()->AimAt(HitLocation);
+
+		GetControlledTank()->Fire();
 	}
 }
 
