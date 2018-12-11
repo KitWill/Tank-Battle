@@ -26,4 +26,6 @@ public:
 
 	ATank* GetPlayerTank() const;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Track")
+		float AcceptanceRadius = 3000;
 };
