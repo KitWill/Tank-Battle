@@ -10,31 +10,41 @@
 class UTankBarrel;
 class UTankTurret;
 
+UENUM()
+enum  class EFiringStatus : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKBATTLE_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	
 	UTankAimingComponent();
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void AimAt(FVector WorldSpaceAim, float LaunchSpeed);
+
+	void MoveBarrelToward(FVector AimDirection);
+
+	UFUNCTION(BlueprintCallable, Category = "Movement Component")
+		void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Tank Aiming Component")
+		EFiringStatus FiringStatus = EFiringStatus::Reloading;
+	
+public:	
+
 	UTankBarrel *Barrel;
 	UTankTurret *Turret;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	void AimAt(FVector WorldSpaceAim,float LaunchSpeed);
-
-	void SetBarrelReference(UTankBarrel *BarrelToSet);
-	void SetTurretReference(UTankTurret *TurretToSet);
-
-	void MoveBarrelToward(FVector AimDirection);
-	
 };

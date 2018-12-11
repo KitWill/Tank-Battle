@@ -27,8 +27,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 		float LaunchSpeed = 100000.0f;
 
-	UTankBarrel *Barrel = nullptr;
-	
+//	UTankBarrel *Barrel = nullptr;
+	UPROPERTY(BlueprintReadOnly, Category = "Tank Movement")
 	UTankAimingComponent * TankAimingComponent;
 
 	/*UPROPERTY(BlueprintReadOnly, Category = "Tank Movement")
@@ -49,10 +49,6 @@ public:
 
 	void AimAt(FVector &HitLocation);
 
-	UFUNCTION(BlueprintCallable,Category="Tank")
-		void SetBarrelReference(UTankBarrel *BarrelToSet);
-	UFUNCTION(BlueprintCallable, Category = "Tank")
-		void SetTureteReference(UTankTurret *TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = "Tank")
 		void Fire();
 };

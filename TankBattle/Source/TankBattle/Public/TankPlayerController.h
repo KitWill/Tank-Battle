@@ -23,6 +23,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable,Category = "Tank Player Controller")
 	ATank* GetControlledTank() const;
 
 	void AimTowardCrosshair();
