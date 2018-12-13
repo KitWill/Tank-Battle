@@ -11,7 +11,7 @@
  */
 
 class ATank;
-
+class UTankAimingComponent;
 UCLASS()
 class TANKBATTLE_API ATankPlayerController : public APlayerController
 {
@@ -40,4 +40,11 @@ private:
 		float CrossHairYLocation = 0.3;
 	UPROPERTY(EditAnywhere, Category = "ATankPlayerController")
 		float LineTraceRange = 100000.f;
+
+protected:
+    
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+		void FoundAimingComponent(UTankAimingComponent *AimComRef);
+
+	virtual void BeginPlay() override;
 };

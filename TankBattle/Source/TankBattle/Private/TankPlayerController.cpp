@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
 
 ATankPlayerController::ATankPlayerController()
@@ -13,6 +14,21 @@ void ATankPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	AimTowardCrosshair();
 }
+
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	auto AutoComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AutoComponent)
+	{
+		FoundAimingComponent(AutoComponent);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player controller can't find aiming component at Begin Play"));
+	}
+}
+
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
