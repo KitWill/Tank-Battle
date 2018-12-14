@@ -4,7 +4,6 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
 
 
 // Sets default values
@@ -18,7 +17,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called every frame
@@ -27,36 +25,3 @@ void ATank::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
-void ATank::AimAt(FVector &HitLocation)
-{
-	if (!ensure(TankAimingComponent)) return;
-	TankAimingComponent->AimAt(HitLocation,LaunchSpeed);
-}
-
-
-void ATank::Fire()
-{
-	if (!ensure(TankAimingComponent)) return;
-	bool isReloaded = (GetWorld()->TimeSeconds - LastFireTime) > ReloadTimeInSeconds;
-	if (!TankAimingComponent->Barrel || !ProjectileBlueprint)
-	{
-		//TODO Log erro
-		return;
-	}
-	if(isReloaded)
-	{
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, TankAimingComponent->Barrel->GetSocketLocation(FName("Projectile")), TankAimingComponent->Barrel->GetSocketRotation(FName("Projectile")));
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = GetWorld()->TimeSeconds;
-	}
-}
-
-

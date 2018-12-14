@@ -6,8 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 /**
  * 
  */
@@ -21,10 +19,6 @@ public:
 	ATankAIController();
 
 	virtual void Tick(float DeltaTime) override;
-
-	ATank* GetControlledTank() const;
-
-	ATank* GetPlayerTank() const;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Track")
 		float AcceptanceRadius = 3000;

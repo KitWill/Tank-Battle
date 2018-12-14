@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Projectile.h"
 #include "TankAimingComponent.generated.h"
+
 
 
 class UTankBarrel;
@@ -29,12 +31,15 @@ public:
 	UTankAimingComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector WorldSpaceAim, float LaunchSpeed);
+	void AimAt(FVector WorldSpaceAim);
 
 	void MoveBarrelToward(FVector AimDirection);
 
 	UFUNCTION(BlueprintCallable, Category = "Movement Component")
 		void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = "Tank")
+		void Fire();
 
 protected:
 	// Called when the game starts
@@ -42,7 +47,16 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Tank Aiming Component")
 		EFiringStatus FiringStatus = EFiringStatus::Reloading;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+		float LaunchSpeed = 100000.0f;
 	
+	UPROPERTY(EditAnywhere, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float ReloadTimeInSeconds = 3;
+	float LastFireTime = 0;
+
 public:	
 
 	UTankBarrel *Barrel;
