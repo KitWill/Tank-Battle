@@ -18,10 +18,10 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto AutoComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-	if (AutoComponent)
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent)
 	{
-		FoundAimingComponent(AutoComponent);
+		FoundAimingComponent(AimingComponent);
 	}
 	else
 	{
