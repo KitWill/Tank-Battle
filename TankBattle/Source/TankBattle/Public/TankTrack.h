@@ -24,6 +24,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Track")
 		float TrackMaxDrivingForce = 400000;
 
+	virtual void BeginPlay() override;
+
 private:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };
