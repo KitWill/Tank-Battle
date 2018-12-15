@@ -58,6 +58,10 @@ protected:
 		float ReloadTimeInSeconds = 3;
 	float LastFireTime = 0;
 
+	FVector AimDirection = FVector(0,0,0);
+
+	bool IsBarrelMoving();
+	
 public:	
 
 	UTankBarrel *Barrel;

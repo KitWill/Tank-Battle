@@ -25,8 +25,13 @@ void UTankAimingComponent::BeginPlay()
 
 	// ...
 	LastFireTime = GetWorld()->TimeSeconds;
+}
 
-	
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) return false;
+	auto BarrelFoeward = Barrel->GetForwardVector();
+	return !BarrelFoeward.Equals(AimDirection, 0.01);
 }
 
 
@@ -36,10 +41,19 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-	if ((GetWorld()->TimeSeconds - LastFireTime) > ReloadTimeInSeconds)
+	if ((GetWorld()->TimeSeconds - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
+	else if (IsBarrelMoving())
+	{
+		FiringStatus = EFiringStatus::Aiming;
+	}
+	else
+	{
+		FiringStatus = EFiringStatus::Locked;
+	}
+	
 }
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
@@ -62,7 +76,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
 
     if(bHaveAimSoution)
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+	    AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelToward(AimDirection);
 	}	
 
