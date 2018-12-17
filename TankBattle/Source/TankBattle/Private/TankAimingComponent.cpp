@@ -117,3 +117,8 @@ void UTankAimingComponent::Fire()
 		LastFireTime = GetWorld()->TimeSeconds;
 	}
 }
+
+EFiringStatus UTankAimingComponent::GetFiringState() const
+{
+	return FiringStatus;
+}

@@ -41,6 +41,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Tank")
 		void Fire();
 
+	EFiringStatus GetFiringState() const;
+	 
 
 protected:
 	// Called when the game starts
