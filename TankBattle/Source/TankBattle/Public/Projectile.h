@@ -31,10 +31,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UParticleSystemComponent *LaunchBlase;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+    UParticleSystemComponent * ImpactBlast;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void LaunchProjectile(float LaunchSpeed);
 	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };
