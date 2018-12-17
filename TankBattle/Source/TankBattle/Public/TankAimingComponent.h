@@ -73,6 +73,8 @@ public:
 
 	UTankBarrel *Barrel;
 	UTankTurret *Turret;
-	int RoundsLeft = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 RoundsLeft = 3;
 
 };

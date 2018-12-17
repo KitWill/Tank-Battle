@@ -7,6 +7,8 @@
 #include "Projectile.generated.h"
 
 class UProjectileMovementComponent;
+class UParticleSystemComponent;
+
 
 UCLASS()
 class TANKBATTLE_API AProjectile : public AActor
@@ -22,6 +24,12 @@ protected:
 	virtual void BeginPlay() override;
 
 	UProjectileMovementComponent *ProjectileMovement;
+
+	UPROPERTY(VisibleAnywhere,Category = "Components")
+	UStaticMeshComponent *CollisionMesh;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent *LaunchBlase;
 
 public:	
 	// Called every frame
