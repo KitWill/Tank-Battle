@@ -18,7 +18,8 @@ enum  class EFiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -41,7 +42,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Tank")
 		void Fire();
 
+	
 	EFiringStatus GetFiringState() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetGoundLeft() const;
 	 
 
 protected:
@@ -68,5 +73,6 @@ public:
 
 	UTankBarrel *Barrel;
 	UTankTurret *Turret;
+	int RoundsLeft = 3;
 
 };
