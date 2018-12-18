@@ -39,6 +39,11 @@ void AProjectile::BeginPlay()
     CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
+void AProjectile::OnTimerExpire()
+{
+	Destroy();
+}
+
 // Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
@@ -57,5 +62,11 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlase->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire,DestroyDelay,false);
 }
 
