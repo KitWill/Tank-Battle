@@ -8,7 +8,7 @@
 
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
-
+class  URadialForceComponent;
 
 UCLASS()
 class TANKBATTLE_API AProjectile : public AActor
@@ -33,6 +33,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
     UParticleSystemComponent * ImpactBlast;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		URadialForceComponent *ExplosionForce;
 
 public:	
 	// Called every frame
