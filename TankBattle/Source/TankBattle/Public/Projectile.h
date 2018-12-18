@@ -42,6 +42,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Set Up")
 		float DestroyDelay = 10.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Set Up")
+		float ProjectileDamage = 20.0f;
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

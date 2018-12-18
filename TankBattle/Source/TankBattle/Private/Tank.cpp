@@ -19,6 +19,15 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 }
 
+float ATank::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	int32 DamagePoint = FPlatformMath::RoundToInt(Damage);
+	auto DamageToApply = FMath::Clamp(DamagePoint, 0, CurrentHealth);
+	CurrentHealth -= DamageToApply;
+
+	return DamageToApply;
+}
+
 // Called every frame
 void ATank::Tick(float DeltaTime)
 {
