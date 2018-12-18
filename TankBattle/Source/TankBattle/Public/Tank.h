@@ -21,6 +21,9 @@ protected:
 	
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
+	UFUNCTION(BlueprintPure,Category = "Health")
+	float GetHealthPercentage() const;
+
 //	UTankBarrel *Barrel = nullptr;
 
 	/*UPROPERTY(BlueprintReadOnly, Category = "Tank Movement")
