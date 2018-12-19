@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
+#include "Camera/CameraComponent.h "
 
 
 // Sets default values
@@ -18,7 +19,11 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentHealth = StartingHealth;
-}
+	TArray<UCameraComponent *> Cams;
+	GetComponents(Cams);
+	ThirdCam = Cams[0];
+	FirstCam = Cams[1];
+}  
 
 float ATank::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
@@ -43,5 +48,13 @@ float ATank::GetHealthPercentage() const
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
+
+void ATank::SwitchCamera()
+{
+	if (!ThirdCam && !FirstCam) return;
+
+	ThirdCam->ToggleActive();
+	FirstCam->ToggleActive();
+}
+

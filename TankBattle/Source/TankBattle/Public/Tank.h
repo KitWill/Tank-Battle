@@ -8,6 +8,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
+class UCameraComponent;
+
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
 {
@@ -28,6 +30,9 @@ protected:
 
 //	UTankBarrel *Barrel = nullptr;
 
+	UCameraComponent *ThirdCam;
+	UCameraComponent *FirstCam;
+
 	/*UPROPERTY(BlueprintReadOnly, Category = "Tank Movement")
 	UTankMovementComponent *TankMovementComponent;*/
 public:	
@@ -43,5 +48,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Set Up")
 	int32 CurrentHealth;
 
-	
+	UFUNCTION(BlueprintCallable, Category = "Camera Switch")
+		void SwitchCamera();
+
 };
