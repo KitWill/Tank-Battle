@@ -41,7 +41,7 @@ private:
 	int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = "Set Up")
-	int32 CurrentHealth = StartingHealth;
+	int32 CurrentHealth;
 
 	
 };

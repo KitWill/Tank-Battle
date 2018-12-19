@@ -49,5 +49,6 @@ void ATankAIController::SetPawn(APawn * InPawn)
 
 void ATankAIController::OnPossedTankDeath()
 {
-
+	if (!ensure(GetPawn())) return;
+	GetPawn()->DetachFromControllerPendingDestroy();
 }

@@ -30,6 +30,8 @@ public:
 	bool GetLookDirection(FVector2D ScreenLocation,FVector &LookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
 
+	
+
 private:
 	UPROPERTY(EditAnywhere,Category = "ATankPlayerController")
 		float CrossHairXLocation = 0.5;
@@ -37,6 +39,10 @@ private:
 		float CrossHairYLocation = 0.3;
 	UPROPERTY(EditAnywhere, Category = "ATankPlayerController")
 		float LineTraceRange = 100000.f;
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPossedTankDeath();
 
 protected:
     
