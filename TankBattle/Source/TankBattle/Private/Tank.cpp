@@ -25,6 +25,11 @@ float ATank::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AControl
 	auto DamageToApply = FMath::Clamp(DamagePoint, 0, CurrentHealth);
 	CurrentHealth -= DamageToApply;
 
+	if(CurrentHealth<=0)
+	{
+		OnDeath.Broadcast();
+	}
+
 	return DamageToApply;
 }
 

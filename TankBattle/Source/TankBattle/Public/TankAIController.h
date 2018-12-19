@@ -19,7 +19,12 @@ public:
 	ATankAIController();
 
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetPawn(APawn* InPawn) override;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Track")
 		float AcceptanceRadius = 3000;
+
+	UFUNCTION()
+	void OnPossedTankDeath();
 };

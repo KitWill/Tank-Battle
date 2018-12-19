@@ -6,6 +6,8 @@
 #include "Tank.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
 {
@@ -32,6 +34,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	FTankDelegate OnDeath;
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Set Up")
 	int32 StartingHealth = 100;
@@ -39,4 +43,5 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Set Up")
 	int32 CurrentHealth = StartingHealth;
 
+	
 };
