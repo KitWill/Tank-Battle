@@ -15,18 +15,20 @@ class TANKBATTLE_API USpwanPoint : public USceneComponent
 public:	
 	// Sets default values for this component's properties
 	USpwanPoint();
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-			
+	AActor *GetSpwanedActor() const { return SpwanedActor; }
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;			
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AActor> SpawnClass;
 	
+	UPROPERTY()
+	AActor *SpwanedActor;
+
 };

@@ -51,4 +51,5 @@ private:
 	UFUNCTION(BlueprintCallable, Category = "Camera Switch")
 		void SwitchCamera();
 
+
 };

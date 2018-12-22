@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+class ASprungWheel;
+
 UCLASS(meta = (BlueprintSpawnableComponent))
 class TANKBATTLE_API UTankTrack : public UStaticMeshComponent
 {
@@ -21,7 +24,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetThrottle(float Throttle);
 
-	void DriveTrack();
+	void DriveTrack(float CurrentThrottel);
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Track")
 		float TrackMaxDrivingForce = 400000;
@@ -30,10 +33,6 @@ public:
 
 private:
 
-	void ApplySidewayForce();
+	TArray<ASprungWheel *> GetWheels() const;
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
-	float CurrentThrottel = 0.0f;
 };

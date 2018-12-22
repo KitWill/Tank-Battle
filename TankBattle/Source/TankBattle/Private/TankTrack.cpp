@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankTrack.h"
+#include "SprungWheel.h"
+#include "SpwanPoint.h"
 
 
 UTankTrack::UTankTrack()
@@ -11,41 +13,48 @@ UTankTrack::UTankTrack()
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
-void UTankTrack::ApplySidewayForce()
+TArray<ASprungWheel*> UTankTrack::GetWheels() const
 {
-	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
+	TArray<ASprungWheel*> ResultArray;
+	TArray<USceneComponent *> Children;
+	GetChildrenComponents(true, Children);
 
-	auto DeltaTime = GetWorld()->GetDeltaSeconds();
-	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
+	for(USceneComponent * Child:Children)
+	{
+		auto SpwanPiont = Cast<USpwanPoint>(Child);
+		if (!SpwanPiont) continue;
 
-	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto CorrectionForce = (TankRoot->GetMass()*CorrectionAcceleration) / 2;
-	TankRoot->AddForce(CorrectionForce);
+		AActor *SpawnedChild = SpwanPiont->GetSpwanedActor();
+
+		auto SpawnedWheel = Cast<ASprungWheel>(SpawnedChild);
+		if (!SpawnedWheel) continue;
+
+		ResultArray.Add(SpawnedWheel);
+	}
+
+	return ResultArray;
 }
 
-void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-	ApplySidewayForce();
-	DriveTrack();
-	CurrentThrottel = 0;
-}
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottel = FMath::Clamp(CurrentThrottel + Throttle, -1.0f, 1.0f);
+	float CurrentThrottel = FMath::Clamp( Throttle, -1.0f, 1.0f);
+	DriveTrack(CurrentThrottel);
 }
 
-void UTankTrack::DriveTrack()
+void UTankTrack::DriveTrack(float CurrentThrottel)
 {
-	auto ForceApplied = GetForwardVector()*CurrentThrottel*TrackMaxDrivingForce;
+	auto ForceApplied = CurrentThrottel*TrackMaxDrivingForce;
+	auto Wheels = GetWheels();
+	auto ForcePerWheel = ForceApplied / Wheels.Num();
 
-	auto ForedeLocation = GetComponentLocation();
-
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForedeLocation);
+	for (ASprungWheel *Wheel : Wheels)
+	{
+		Wheel->AddDrivingForce(ForcePerWheel);
+	}
+	
 }
 
 

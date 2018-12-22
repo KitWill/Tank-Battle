@@ -6,7 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "SprungWheel.generated.h"
 
-class  UPhysicsConstraintComponent;
+class UPhysicsConstraintComponent;
+class USphereComponent;
 
 UCLASS()
 class TANKBATTLE_API ASprungWheel : public AActor
@@ -16,21 +17,28 @@ class TANKBATTLE_API ASprungWheel : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ASprungWheel();
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	void AddDrivingForce(float ForceMagnitude);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent *Wheel;
+	USphereComponent *Wheel;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	USphereComponent *Axle;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
     UPhysicsConstraintComponent *MassWheelConstraint;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent *AxleWheelConstraint;
 	
 	void SetupConstraint();
 	
